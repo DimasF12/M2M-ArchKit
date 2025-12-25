@@ -19,7 +19,7 @@ const teamData: TeamMemberProps[] = [
   {
     name: "Agus Setiawan",
     role: "Researcher",
-    imageUrl: "https://avatars.githubusercontent.com/u/2?v=4", // Placeholder gambar
+    imageUrl: "/team/agus.jpeg",
   },
   {
     name: "Najwa Iffa Fadhila",
