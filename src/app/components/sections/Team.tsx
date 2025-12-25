@@ -1,30 +1,74 @@
 import React from 'react';
-import { Users } from 'lucide-react';
+// Kita tidak butuh ikon Users lagi karena akan diganti foto
+// import { Users } from 'lucide-react';
 
-// Sub-component kecil untuk item tim (Internal use only)
-const TeamMember = ({ name, role }: { name: string, role: string }) => (
-  <div className="flex items-center gap-4 bg-slate-50 px-6 py-4 rounded-xl border border-slate-100">
-    <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center text-slate-500">
-      <Users size={24} />
+// --- 1. Definisi Tipe Data Anggota Tim ---
+type TeamMemberProps = {
+  name: string;
+  role: string;
+  imageUrl: string; // Menambahkan properti untuk URL gambar
+};
+
+// --- 2. Data Anggota Tim (Edit foto di sini) ---
+const teamData: TeamMemberProps[] = [
+  {
+    name: "Dimas Firmansyah",
+    role: "Leader Tim & Researcher",
+    imageUrl: "/team/dimasfir.jpeg",
+  },
+  {
+    name: "Agus Setiawan",
+    role: "Researcher",
+    imageUrl: "https://avatars.githubusercontent.com/u/2?v=4", // Placeholder gambar
+  },
+  {
+    name: "Najwa Iffa Fadhila",
+    role: "Researcher",
+    imageUrl: "https://avatars.githubusercontent.com/u/3?v=4", // Placeholder gambar
+  },
+];
+
+
+// --- 3. Sub-component TeamMember (Updated) ---
+const TeamMember = ({ name, role, imageUrl }: TeamMemberProps) => (
+  <div className="flex items-center gap-4 bg-slate-50 px-6 py-4 rounded-xl border border-slate-100 hover:shadow-md transition-all">
+    {/* Container Foto */}
+    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-slate-200 shadow-sm">
+      <img
+        src={imageUrl}
+        alt={`Foto ${name}`}
+        className="w-full h-full object-cover"
+      />
     </div>
+    
     <div className="text-left">
-      <h4 className="font-bold text-slate-900">{name}</h4>
-      <p className="text-xs text-slate-500 uppercase tracking-wide">{role}</p>
+      <h4 className="font-bold text-slate-900 text-lg">{name}</h4>
+      <p className="text-xs text-slate-500 uppercase tracking-wide font-medium">{role}</p>
     </div>
   </div>
 );
 
+// --- 4. Main Component ---
 const Team = () => {
   return (
-    <section id="team" className="py-20 max-w-7xl mx-auto px-4">
-      <div className="text-center mb-12">
+    <section id="team" className="py-24 max-w-7xl mx-auto px-4">
+      <div className="text-center mb-16">
         <h2 className="text-3xl font-bold text-slate-900">Tim Pengembang</h2>
-        <p className="text-slate-600 mt-2">Didukung oleh para ahli arsitektur sistem pemerintahan.</p>
+        <p className="text-slate-600 mt-3 text-lg">
+          Didukung oleh para ahli arsitektur sistem pemerintahan.
+        </p>
       </div>
+      
+      {/* Looping data tim */}
       <div className="flex flex-wrap justify-center gap-8">
-        <TeamMember name="Anda (Lead Architect)" role="Creator & Maintainer" />
-        <TeamMember name="M2M Community" role="Open Source Contributors" />
-        <TeamMember name="AI Assistant" role="Technical Co-Pilot" />
+        {teamData.map((member, index) => (
+          <TeamMember 
+            key={index}
+            name={member.name}
+            role={member.role}
+            imageUrl={member.imageUrl}
+          />
+        ))}
       </div>
     </section>
   );
